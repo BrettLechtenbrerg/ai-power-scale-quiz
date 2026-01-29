@@ -1,0 +1,1594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Power Scale Quiz — How AI-Ready Is Your Business?</title>
+  <meta name="description" content="Take this 2-minute quiz to discover your AI Power Scale level and see how much time, money, and energy AI could be saving your business right now.">
+
+  <!-- Open Graph / Social Sharing -->
+  <meta property="og:title" content="AI Power Scale Quiz — How AI-Ready Is Your Business?">
+  <meta property="og:description" content="Take this 2-minute quiz to discover your AI Power Scale level and see how much time, money, and energy AI could be saving your business.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="/public/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AI Power Scale Quiz — How AI-Ready Is Your Business?">
+  <meta name="twitter:description" content="Discover your AI Power Scale level in 2 minutes.">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    /* ============================================
+       CSS RESET & VARIABLES
+    ============================================ */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --red: #E53935;
+      --red-light: #FFF0F0;
+      --red-glow: rgba(229, 57, 53, 0.15);
+      --pink: #E968A0;
+      --pink-light: #FFF0F6;
+      --pink-glow: rgba(233, 104, 160, 0.15);
+      --silver: #8A8A8A;
+      --silver-light: #F5F5F5;
+      --silver-glow: rgba(138, 138, 138, 0.15);
+      --gold: #C5A033;
+      --gold-light: #FFFBEB;
+      --gold-glow: rgba(197, 160, 51, 0.15);
+      --bg: #F8F9FB;
+      --card: #FFFFFF;
+      --text: #1A1A2E;
+      --text-secondary: #555770;
+      --text-muted: #8E90A6;
+      --border: #E8E8EE;
+      --radius: 16px;
+      --shadow: 0 4px 24px rgba(0,0,0,0.06);
+      --shadow-lg: 0 12px 48px rgba(0,0,0,0.1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ============================================
+       LAYOUT
+    ============================================ */
+    .screen {
+      display: none;
+      width: 100%;
+      min-height: 100vh;
+      flex-direction: column;
+      align-items: center;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .screen.active { display: flex; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    @keyframes fillBar {
+      from { width: 0; }
+    }
+
+    @keyframes countUp {
+      from { opacity: 0; transform: scale(0.5); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes shimmer {
+      0% { background-position: -200% center; }
+      100% { background-position: 200% center; }
+    }
+
+    /* ============================================
+       SCREEN 1: LANDING / HERO
+    ============================================ */
+    .hero {
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -20%;
+      width: 140%;
+      height: 140%;
+      background:
+        radial-gradient(ellipse at 20% 50%, var(--red-glow) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, var(--gold-glow) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 80%, var(--pink-glow) 0%, transparent 40%);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      max-width: 720px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 40px;
+      padding: 8px 20px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 28px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+
+    .hero-badge svg { width: 16px; height: 16px; }
+
+    .hero h1 {
+      font-size: clamp(36px, 6vw, 58px);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -1.5px;
+      margin-bottom: 20px;
+      color: var(--text);
+    }
+
+    .hero h1 span {
+      background: linear-gradient(135deg, var(--red) 0%, var(--pink) 40%, var(--gold) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(17px, 2.5vw, 20px);
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 40px;
+      max-width: 560px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, var(--red) 0%, #D84F87 100%);
+      color: white;
+      font-size: 18px;
+      font-weight: 700;
+      padding: 18px 40px;
+      border-radius: 60px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(229, 57, 53, 0.3);
+      letter-spacing: 0.3px;
+    }
+
+    .hero-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(229, 57, 53, 0.4);
+    }
+
+    .hero-cta:active { transform: translateY(0); }
+
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      margin-top: 24px;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .hero-meta span {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Power Scale Preview */
+    .scale-preview {
+      display: flex;
+      gap: 8px;
+      margin-top: 48px;
+      animation: slideUp 0.8s ease 0.3s both;
+    }
+
+    .scale-preview-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .scale-dot {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 800;
+      color: white;
+      letter-spacing: 0.5px;
+    }
+
+    .scale-dot.l1 { background: var(--red); }
+    .scale-dot.l2 { background: var(--pink); }
+    .scale-dot.l3 { background: var(--silver); }
+    .scale-dot.l4 { background: var(--gold); }
+
+    .scale-label {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* ============================================
+       SCREEN 2: QUIZ QUESTIONS
+    ============================================ */
+    .quiz-wrapper {
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 32px 24px 48px;
+    }
+
+    /* Progress Bar */
+    .progress-container {
+      width: 100%;
+      max-width: 640px;
+      margin-bottom: 16px;
+    }
+
+    .progress-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .progress-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .progress-count {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--red), var(--pink), var(--gold));
+      border-radius: 10px;
+      transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Question Card */
+    .question-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 48px 40px;
+      max-width: 640px;
+      width: 100%;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      animation: scaleIn 0.4s ease;
+    }
+
+    .question-number {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .question-text {
+      font-size: 22px;
+      font-weight: 800;
+      line-height: 1.35;
+      color: var(--text);
+      margin-bottom: 32px;
+    }
+
+    /* Answer Options */
+    .answers {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .answer-btn {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      width: 100%;
+      padding: 18px 20px;
+      background: var(--bg);
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      text-align: left;
+      font-family: inherit;
+      font-size: 15.5px;
+      line-height: 1.5;
+      color: var(--text);
+    }
+
+    .answer-btn:hover {
+      border-color: #C0C0D0;
+      background: white;
+      transform: translateX(4px);
+    }
+
+    .answer-btn.selected {
+      border-color: var(--gold);
+      background: var(--gold-light);
+    }
+
+    .answer-letter {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: white;
+      border: 2px solid var(--border);
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--text-secondary);
+      transition: all 0.25s ease;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .answer-btn:hover .answer-letter {
+      border-color: #C0C0D0;
+      color: var(--text);
+    }
+
+    .answer-btn.selected .answer-letter {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: white;
+    }
+
+    .answer-text { font-weight: 500; padding-top: 4px; }
+
+    /* ============================================
+       SCREEN 3: EMAIL GATE
+    ============================================ */
+    .gate-wrapper {
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 24px;
+    }
+
+    .gate-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 56px 48px;
+      max-width: 540px;
+      width: 100%;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border);
+      text-align: center;
+      animation: scaleIn 0.5s ease;
+    }
+
+    .gate-icon {
+      width: 72px;
+      height: 72px;
+      background: linear-gradient(135deg, var(--gold-light), #FFF3CD);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      font-size: 32px;
+    }
+
+    .gate-card h2 {
+      font-size: 26px;
+      font-weight: 800;
+      margin-bottom: 12px;
+      line-height: 1.25;
+    }
+
+    .gate-card p {
+      font-size: 16px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+
+    .gate-form {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .gate-input {
+      width: 100%;
+      padding: 16px 20px;
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      font-family: inherit;
+      font-size: 16px;
+      color: var(--text);
+      background: var(--bg);
+      transition: all 0.2s ease;
+      outline: none;
+    }
+
+    .gate-input:focus {
+      border-color: var(--gold);
+      background: white;
+      box-shadow: 0 0 0 4px var(--gold-glow);
+    }
+
+    .gate-input::placeholder { color: var(--text-muted); }
+
+    .gate-submit {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, var(--red) 0%, #D84F87 100%);
+      color: white;
+      font-family: inherit;
+      font-size: 17px;
+      font-weight: 700;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 16px rgba(229, 57, 53, 0.25);
+    }
+
+    .gate-submit:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 24px rgba(229, 57, 53, 0.35);
+    }
+
+    .gate-privacy {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    .gate-skip {
+      background: none;
+      border: none;
+      font-family: inherit;
+      font-size: 14px;
+      color: var(--text-muted);
+      cursor: pointer;
+      margin-top: 16px;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .gate-skip:hover { color: var(--text-secondary); }
+
+    /* ============================================
+       SCREEN 4: RESULTS
+    ============================================ */
+    .results-wrapper {
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 48px 24px 64px;
+    }
+
+    .results-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      max-width: 680px;
+      width: 100%;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      animation: scaleIn 0.5s ease;
+    }
+
+    /* Score Header */
+    .results-header {
+      padding: 48px 40px 40px;
+      text-align: center;
+      position: relative;
+    }
+
+    .results-header.level-1 { background: linear-gradient(135deg, #FFF0F0 0%, #FFE0E0 100%); }
+    .results-header.level-2 { background: linear-gradient(135deg, #FFF0F6 0%, #FFE0EE 100%); }
+    .results-header.level-3 { background: linear-gradient(135deg, #F5F5F5 0%, #EBEBEB 100%); }
+    .results-header.level-4 { background: linear-gradient(135deg, #FFFBEB 0%, #FFF3CD 100%); }
+
+    .score-circle {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      background: white;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      animation: countUp 0.6s ease 0.2s both;
+    }
+
+    .score-number {
+      font-size: 48px;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .score-label {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .level-1 .score-number { color: var(--red); }
+    .level-2 .score-number { color: var(--pink); }
+    .level-3 .score-number { color: var(--silver); }
+    .level-4 .score-number { color: var(--gold); }
+
+    .result-level-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 22px;
+      border-radius: 40px;
+      font-size: 15px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      letter-spacing: 0.5px;
+    }
+
+    .level-1 .result-level-badge { background: var(--red); color: white; }
+    .level-2 .result-level-badge { background: var(--pink); color: white; }
+    .level-3 .result-level-badge { background: var(--silver); color: white; }
+    .level-4 .result-level-badge { background: var(--gold); color: white; }
+
+    .result-title {
+      font-size: 28px;
+      font-weight: 900;
+      line-height: 1.25;
+      margin-bottom: 0;
+    }
+
+    /* Score Bar Visualization */
+    .score-bar-section {
+      padding: 32px 40px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .score-bar-track {
+      width: 100%;
+      height: 14px;
+      background: #EBEBEB;
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .score-bar-fill {
+      height: 100%;
+      border-radius: 10px;
+      transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .score-bar-fill.level-1 { background: linear-gradient(90deg, #E53935, #EF5350); }
+    .score-bar-fill.level-2 { background: linear-gradient(90deg, #E968A0, #F48FB1); }
+    .score-bar-fill.level-3 { background: linear-gradient(90deg, #8A8A8A, #BDBDBD); }
+    .score-bar-fill.level-4 { background: linear-gradient(90deg, #C5A033, #D4AF37); }
+
+    .score-bar-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+
+    .bar-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-align: center;
+      flex: 1;
+    }
+
+    .bar-label.active { color: var(--text); }
+
+    /* Results Body */
+    .results-body {
+      padding: 36px 40px;
+    }
+
+    .results-message {
+      font-size: 16.5px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+    }
+
+    /* Key Findings */
+    .findings {
+      margin-bottom: 32px;
+    }
+
+    .findings h3 {
+      font-size: 16px;
+      font-weight: 800;
+      margin-bottom: 14px;
+      color: var(--text);
+    }
+
+    .finding-item {
+      display: flex;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .finding-item:last-child { border-bottom: none; }
+
+    .finding-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+      font-size: 13px;
+    }
+
+    .level-1 .finding-icon { background: var(--red-light); }
+    .level-2 .finding-icon { background: var(--pink-light); }
+    .level-3 .finding-icon { background: var(--silver-light); }
+    .level-4 .finding-icon { background: var(--gold-light); }
+
+    .finding-text {
+      font-size: 14.5px;
+      line-height: 1.55;
+      color: var(--text-secondary);
+    }
+
+    /* CTA Section */
+    .results-cta {
+      padding: 36px 40px;
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .cta-headline {
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .cta-sub {
+      font-size: 15px;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+    }
+
+    .cta-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 36px;
+      background: linear-gradient(135deg, var(--red), #D84F87);
+      color: white;
+      font-family: inherit;
+      font-size: 17px;
+      font-weight: 700;
+      border: none;
+      border-radius: 60px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(229, 57, 53, 0.3);
+      text-decoration: none;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(229, 57, 53, 0.4);
+    }
+
+    /* Share Section */
+    .share-section {
+      padding: 28px 40px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .share-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .share-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .share-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      border: 2px solid var(--border);
+      background: white;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 18px;
+    }
+
+    .share-btn:hover {
+      border-color: var(--gold);
+      background: var(--gold-light);
+      transform: translateY(-2px);
+    }
+
+    .retake-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 24px;
+      padding: 10px 24px;
+      background: none;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .retake-btn:hover {
+      border-color: #C0C0D0;
+      background: var(--bg);
+    }
+
+    /* ============================================
+       POWER SCALE GRAPHIC IN RESULTS
+    ============================================ */
+    .scale-visual {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin: 24px 0 8px;
+    }
+
+    .scale-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+      opacity: 0.45;
+    }
+
+    .scale-row.current {
+      opacity: 1;
+      transform: scale(1.02);
+    }
+
+    .scale-row.current.sr-1 { background: var(--red-light); border: 2px solid var(--red); }
+    .scale-row.current.sr-2 { background: var(--pink-light); border: 2px solid var(--pink); }
+    .scale-row.current.sr-3 { background: var(--silver-light); border: 2px solid var(--silver); }
+    .scale-row.current.sr-4 { background: var(--gold-light); border: 2px solid var(--gold); }
+
+    .scale-row:not(.current) { border: 2px solid transparent; }
+
+    .scale-row-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .sr-1 .scale-row-dot { background: var(--red); }
+    .sr-2 .scale-row-dot { background: var(--pink); }
+    .sr-3 .scale-row-dot { background: var(--silver); }
+    .sr-4 .scale-row-dot { background: var(--gold); }
+
+    .scale-row-name {
+      font-size: 13px;
+      font-weight: 700;
+      flex: 1;
+    }
+
+    .scale-row-arrow {
+      font-size: 14px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .scale-row.current .scale-row-arrow { opacity: 1; }
+
+    /* ============================================
+       RESPONSIVE
+    ============================================ */
+    @media (max-width: 640px) {
+      .question-card { padding: 32px 24px; }
+      .gate-card { padding: 40px 28px; }
+      .results-header { padding: 36px 24px 32px; }
+      .results-body { padding: 28px 24px; }
+      .results-cta { padding: 28px 24px; }
+      .share-section { padding: 20px 24px; flex-direction: column; }
+      .score-bar-section { padding: 24px; }
+      .result-title { font-size: 24px; }
+      .scale-preview { flex-wrap: wrap; justify-content: center; }
+      .hero-meta { flex-direction: column; gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================
+       SCREEN 1: LANDING PAGE
+  ========================================== -->
+  <div id="screen-landing" class="screen active">
+    <div class="hero">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <svg viewBox="0 0 16 16" fill="none"><path d="M8 1L10.1 5.3L15 6L11.5 9.4L12.3 14.3L8 12L3.7 14.3L4.5 9.4L1 6L5.9 5.3L8 1Z" fill="#C5A033"/></svg>
+          AI Power Scale Assessment
+        </div>
+
+        <h1>Is Your Business <span>Using AI</span>… or Falling Behind?</h1>
+
+        <p class="hero-subtitle">
+          Take this 2-minute quiz to discover your AI Power Scale level and see how much time, money, and energy AI could be saving your business right now.
+        </p>
+
+        <button class="hero-cta" onclick="startQuiz()">
+          Get My AI Readiness Score
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+
+        <div class="hero-meta">
+          <span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="#8E90A6" stroke-width="1.5"/><path d="M8 4V8.5L11 10" stroke="#8E90A6" stroke-width="1.5" stroke-linecap="round"/></svg>
+            Takes 2 minutes
+          </span>
+          <span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1L10.1 5.3L15 6L11.5 9.4L12.3 14.3L8 12L3.7 14.3L4.5 9.4L1 6L5.9 5.3L8 1Z" stroke="#8E90A6" stroke-width="1.5" fill="none"/></svg>
+            5 Questions
+          </span>
+          <span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="10" rx="2" stroke="#8E90A6" stroke-width="1.5"/><path d="M1 7L8 11L15 7" stroke="#8E90A6" stroke-width="1.5"/></svg>
+            Free Results
+          </span>
+        </div>
+
+        <div class="scale-preview">
+          <div class="scale-preview-item">
+            <div class="scale-dot l1">L1</div>
+            <span class="scale-label">Operator</span>
+          </div>
+          <div class="scale-preview-item">
+            <div class="scale-dot l2">L2</div>
+            <span class="scale-label">Tourist</span>
+          </div>
+          <div class="scale-preview-item">
+            <div class="scale-dot l3">L3</div>
+            <span class="scale-label">Implementer</span>
+          </div>
+          <div class="scale-preview-item">
+            <div class="scale-dot l4">L4</div>
+            <span class="scale-label">Orchestrator</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       SCREEN 2: QUIZ QUESTIONS
+  ========================================== -->
+  <div id="screen-quiz" class="screen">
+    <div class="quiz-wrapper">
+      <div class="progress-container">
+        <div class="progress-top">
+          <span class="progress-label">Your AI Readiness</span>
+          <span class="progress-count" id="progress-count">1 of 6</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+        </div>
+      </div>
+
+      <div id="question-container"></div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       SCREEN 3: EMAIL GATE
+  ========================================== -->
+  <div id="screen-gate" class="screen">
+    <div class="gate-wrapper">
+      <div class="gate-card">
+        <div class="gate-icon">📊</div>
+        <h2>Your AI Power Scale Score Is Ready!</h2>
+        <p>Enter your info below to see your personalized AI readiness score, your Power Scale level, and a custom action plan.</p>
+
+        <form class="gate-form" onsubmit="submitGate(event)">
+          <input type="text" class="gate-input" id="gate-name" placeholder="Your first name" required>
+          <input type="email" class="gate-input" id="gate-email" placeholder="Your best email" required>
+          <button type="submit" class="gate-submit">
+            Show My Results →
+          </button>
+        </form>
+
+        <p class="gate-privacy">🔒 We respect your privacy. No spam, ever. Unsubscribe anytime.</p>
+        <button class="gate-skip" onclick="skipGate()">Skip and see my results</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       SCREEN 4: RESULTS
+  ========================================== -->
+  <div id="screen-results" class="screen">
+    <div class="results-wrapper">
+      <div class="results-card">
+
+        <!-- Score Header -->
+        <div class="results-header" id="results-header">
+          <div class="score-circle">
+            <span class="score-number" id="score-number">0</span>
+            <span class="score-label">out of 100</span>
+          </div>
+          <div class="result-level-badge" id="result-badge"></div>
+          <h2 class="result-title" id="result-title"></h2>
+        </div>
+
+        <!-- Score Bar -->
+        <div class="score-bar-section">
+          <div class="score-bar-track">
+            <div class="score-bar-fill" id="score-bar-fill" style="width: 0%"></div>
+          </div>
+          <div class="score-bar-labels">
+            <span class="bar-label" id="bl-1">🔴 Operator</span>
+            <span class="bar-label" id="bl-2">🩷 Tourist</span>
+            <span class="bar-label" id="bl-3">🩶 Implementer</span>
+            <span class="bar-label" id="bl-4">🥇 Orchestrator</span>
+          </div>
+        </div>
+
+        <!-- Power Scale Visual -->
+        <div class="results-body">
+          <p class="results-message" id="results-message"></p>
+
+          <!-- Scale Visual -->
+          <div class="scale-visual" id="scale-visual">
+            <div class="scale-row sr-1" id="sr-1">
+              <div class="scale-row-dot"></div>
+              <span class="scale-row-name">Level 1 — Manual Operator</span>
+              <span class="scale-row-arrow">◀ You are here</span>
+            </div>
+            <div class="scale-row sr-2" id="sr-2">
+              <div class="scale-row-dot"></div>
+              <span class="scale-row-name">Level 2 — AI Tourist</span>
+              <span class="scale-row-arrow">◀ You are here</span>
+            </div>
+            <div class="scale-row sr-3" id="sr-3">
+              <div class="scale-row-dot"></div>
+              <span class="scale-row-name">Level 3 — AI Implementer</span>
+              <span class="scale-row-arrow">◀ You are here</span>
+            </div>
+            <div class="scale-row sr-4" id="sr-4">
+              <div class="scale-row-dot"></div>
+              <span class="scale-row-name">Level 4 — AI Orchestrator</span>
+              <span class="scale-row-arrow">◀ You are here</span>
+            </div>
+          </div>
+
+          <!-- Key Findings -->
+          <div class="findings" id="findings-container">
+            <h3>What This Means For You:</h3>
+            <div id="findings-list"></div>
+          </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="results-cta">
+          <h3 class="cta-headline" id="cta-headline"></h3>
+          <p class="cta-sub" id="cta-sub"></p>
+          <a href="#" class="cta-button" id="cta-button">
+            Join the Free Training
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+
+        <!-- Share -->
+        <div class="share-section">
+          <span class="share-label">Share your result:</span>
+          <div class="share-buttons">
+            <button class="share-btn" onclick="shareLinkedIn()" title="Share on LinkedIn">in</button>
+            <button class="share-btn" onclick="shareFacebook()" title="Share on Facebook">f</button>
+            <button class="share-btn" onclick="shareTwitter()" title="Share on X/Twitter">𝕏</button>
+            <button class="share-btn" onclick="copyLink()" title="Copy Link" id="copy-btn">🔗</button>
+          </div>
+        </div>
+      </div>
+
+      <button class="retake-btn" onclick="retakeQuiz()">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8a6 6 0 1 1 1.5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M2 13V9h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Retake Quiz
+      </button>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       JAVASCRIPT
+  ========================================== -->
+  <script>
+    // =============================================
+    // ⚙️ GO HIGH LEVEL CONFIG
+    // =============================================
+    // INSTRUCTIONS: Replace the webhook URL below with your GHL Inbound Webhook URL.
+    // To get this URL:
+    //   1. Go to GHL → Automation → Workflows
+    //   2. Create a new Workflow (or use existing)
+    //   3. Set trigger to "Inbound Webhook"
+    //   4. Copy the webhook URL and paste it below
+    //
+    // The quiz will POST the following fields to your webhook:
+    //   - first_name, email, phone (contact info)
+    //   - quiz_score (0-100)
+    //   - power_scale_level ("Level 1 - Manual Operator", etc.)
+    //   - power_scale_number (1, 2, 3, or 4)
+    //   - business_role (solo, small-team, growing-team, leadership)
+    //   - source ("AI Power Scale Quiz")
+    //   - q1_answer through q5_answer (individual responses)
+    //
+    // In GHL, you can use these fields to:
+    //   - Create/update contacts
+    //   - Apply tags based on level (e.g., "PS-Level-1", "PS-Level-2")
+    //   - Trigger level-specific email/SMS sequences
+    //   - Add to pipelines
+    // =============================================
+    const GHL_CONFIG = {
+      webhookUrl: "", // ← PASTE YOUR GHL INBOUND WEBHOOK URL HERE
+      // Optional: CTA links per level (update these to your GHL funnel/booking pages)
+      ctaLinks: {
+        1: "", // Level 1 CTA link (e.g., free training registration)
+        2: "", // Level 2 CTA link
+        3: "", // Level 3 CTA link
+        4: "", // Level 4 CTA link
+      }
+    };
+
+    // =============================================
+    // QUIZ DATA
+    // =============================================
+    const questions = [
+      {
+        id: 1,
+        text: "How do you currently follow up with new leads or inquiries?",
+        answers: [
+          { letter: "A", text: "I respond manually when I remember", points: 5 },
+          { letter: "B", text: "I respond, but it's inconsistent", points: 10 },
+          { letter: "C", text: "I have some automation, but it's messy", points: 15 },
+          { letter: "D", text: "It's automated and tracked in a system", points: 20 }
+        ]
+      },
+      {
+        id: 2,
+        text: "How many hours per week do you spend on admin or repetitive tasks?",
+        answers: [
+          { letter: "A", text: "15+ hours — it eats up most of my week", points: 5 },
+          { letter: "B", text: "8–15 hours — more than I'd like", points: 10 },
+          { letter: "C", text: "3–7 hours — I've reduced some of it", points: 15 },
+          { letter: "D", text: "Less than 3 hours — most of it is automated", points: 20 }
+        ]
+      },
+      {
+        id: 3,
+        text: "What tools are you using to manage customers and communication?",
+        answers: [
+          { letter: "A", text: "Notes, spreadsheets, or my inbox", points: 5 },
+          { letter: "B", text: "A basic CRM, but I don't really use it well", points: 10 },
+          { letter: "C", text: "Multiple tools that don't talk to each other", points: 15 },
+          { letter: "D", text: "One connected system that runs most things", points: 20 }
+        ]
+      },
+      {
+        id: 4,
+        text: "What happens when a customer messages you after hours?",
+        answers: [
+          { letter: "A", text: "They wait until I see it", points: 5 },
+          { letter: "B", text: "Sometimes they get missed entirely", points: 10 },
+          { letter: "C", text: "I have auto-replies but no real follow-up", points: 15 },
+          { letter: "D", text: "They get an instant response and next steps", points: 20 }
+        ]
+      },
+      {
+        id: 5,
+        text: "How confident do you feel using AI in your business right now?",
+        answers: [
+          { letter: "A", text: "Not confident at all — I don't know where to start", points: 5 },
+          { letter: "B", text: "I've tried it, but it's confusing", points: 10 },
+          { letter: "C", text: "I use AI sometimes, but not strategically", points: 15 },
+          { letter: "D", text: "AI is built into how my business runs", points: 20 }
+        ]
+      },
+      {
+        id: 6,
+        text: "What best describes your role?",
+        isSegmentation: true,
+        answers: [
+          { letter: "A", text: "Solo business owner — I do everything", points: 0, segment: "solo" },
+          { letter: "B", text: "Small team (2–10 people)", points: 0, segment: "small-team" },
+          { letter: "C", text: "Growing team (10+ people)", points: 0, segment: "growing-team" },
+          { letter: "D", text: "Operations or leadership role", points: 0, segment: "leadership" }
+        ]
+      }
+    ];
+
+    // =============================================
+    // RESULTS DATA (4 LEVELS)
+    // =============================================
+    const results = {
+      1: {
+        level: 1,
+        levelClass: "level-1",
+        badge: "🔴 Level 1 — Manual Operator",
+        title: "You're Doing Everything Yourself",
+        message: "Right now, your business relies almost entirely on manual work. That's not a failure — it's extremely common. But the cost is real: you're losing hours every day to tasks that AI and automation could handle in seconds. The good news? You're in the best position to see <strong>dramatic results quickly</strong>. Even small automations could reclaim 10+ hours per week and free you up to focus on what actually grows your business.",
+        findings: [
+          "Your lead follow-up is manual, meaning potential customers are slipping through the cracks",
+          "You're spending 15+ hours a week on admin that AI could handle instantly",
+          "Competitors with automated systems are responding faster and winning more business",
+          "Simple automations (email, scheduling, follow-ups) could transform your week immediately"
+        ],
+        ctaHeadline: "Your Next Step: Reclaim Your Time",
+        ctaSub: "Join our free live training and learn how small businesses are using AI to reclaim 10+ hours per week.",
+        ctaText: "Join the Free AI Training"
+      },
+      2: {
+        level: 2,
+        levelClass: "level-2",
+        badge: "🩷 Level 2 — AI Tourist",
+        title: "You Have Tools — Not Systems",
+        message: "You've started exploring AI and technology, which puts you ahead of many. But right now, it likely feels <strong>fragmented and overwhelming</strong>. You're trying tools without a strategy, and nothing quite connects. AI works best when tools are woven into simple systems that run in the background — not when you're duct-taping apps together. With the right roadmap, your business could run dramatically smoother without adding more complexity.",
+        findings: [
+          "You're dabbling with tools but nothing is integrated into a repeatable workflow",
+          "Your follow-ups and communications are inconsistent — leads notice this",
+          "You're spending money and time on tools you're not fully utilizing",
+          "A clear AI strategy could turn your scattered tools into a powerful system"
+        ],
+        ctaHeadline: "Your Next Step: Build the System",
+        ctaSub: "See how we turn disconnected tools into automated systems that run your business in the background.",
+        ctaText: "See How We Build Systems"
+      },
+      3: {
+        level: 3,
+        levelClass: "level-3",
+        badge: "🩶 Level 3 — AI Implementer",
+        title: "You're Close — Now Connect the Dots",
+        message: "You're ahead of most small businesses. You have some AI tools and automations in place, which shows real initiative. But your systems likely <strong>aren't talking to each other</strong>, and you're still doing too much manually. The biggest opportunity now is integration — connecting your existing tools into one cohesive system. Small improvements here can unlock massive gains in time, revenue, and peace of mind.",
+        findings: [
+          "Your tools aren't integrated — data is siloed across platforms",
+          "You're spending on AI subscriptions but not maximizing your ROI",
+          "Some workflows are automated, but they still need babysitting",
+          "Connecting your existing systems could 2-3x your current efficiency"
+        ],
+        ctaHeadline: "Your Next Step: Connect & Optimize",
+        ctaSub: "Join our AI Systems Training for businesses ready to turn good tools into great systems.",
+        ctaText: "Join the Systems Training"
+      },
+      4: {
+        level: 4,
+        levelClass: "level-4",
+        badge: "🥇 Level 4 — AI Orchestrator",
+        title: "You're Leading the Pack",
+        message: "You're in the top tier. AI isn't just a tool for you — it's <strong>integrated into how your business operates</strong>. Your systems handle follow-ups, customer communication, and routine tasks automatically. Your focus now should be optimization and scale: refining workflows, measuring ROI, and ensuring your systems grow with you. You have a real competitive moat — now it's about widening it and helping your team leverage AI even further.",
+        findings: [
+          "Your automated systems give you a real competitive advantage in speed and consistency",
+          "Focus now on measuring ROI and optimizing your highest-impact workflows",
+          "Consider training your team to fully leverage the AI infrastructure you've built",
+          "Your AI-powered business is worth significantly more — ensure your exit strategy reflects this"
+        ],
+        ctaHeadline: "Your Next Step: Scale & Optimize",
+        ctaSub: "Get advanced strategies for AI-powered businesses ready to scale to the next level.",
+        ctaText: "Access Advanced Strategies"
+      }
+    };
+
+    // =============================================
+    // STATE
+    // =============================================
+    let currentQuestion = 0;
+    let answers = [];
+    let totalScore = 0;
+    let userSegment = "";
+
+    // =============================================
+    // NAVIGATION
+    // =============================================
+    function showScreen(id) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function startQuiz() {
+      currentQuestion = 0;
+      answers = [];
+      totalScore = 0;
+      userSegment = "";
+      showScreen('screen-quiz');
+      renderQuestion();
+    }
+
+    // =============================================
+    // QUIZ ENGINE
+    // =============================================
+    function renderQuestion() {
+      const q = questions[currentQuestion];
+      const total = questions.length;
+      const progress = ((currentQuestion) / total) * 100;
+
+      document.getElementById('progress-count').textContent = `${currentQuestion + 1} of ${total}`;
+      document.getElementById('progress-fill').style.width = `${progress}%`;
+
+      const container = document.getElementById('question-container');
+      container.innerHTML = `
+        <div class="question-card" key="${q.id}">
+          <div class="question-number">${q.isSegmentation ? 'Bonus Question' : `Question ${q.id}`}</div>
+          <h2 class="question-text">${q.text}</h2>
+          <div class="answers">
+            ${q.answers.map((a, i) => `
+              <button class="answer-btn" onclick="selectAnswer(${i})" data-index="${i}">
+                <span class="answer-letter">${a.letter}</span>
+                <span class="answer-text">${a.text}</span>
+              </button>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    function selectAnswer(index) {
+      const q = questions[currentQuestion];
+      const answer = q.answers[index];
+
+      // Visual feedback
+      document.querySelectorAll('.answer-btn').forEach(btn => btn.classList.remove('selected'));
+      document.querySelector(`[data-index="${index}"]`).classList.add('selected');
+
+      // Store answer
+      if (!q.isSegmentation) {
+        totalScore += answer.points;
+      } else {
+        userSegment = answer.segment || "";
+      }
+
+      answers.push({
+        questionId: q.id,
+        answer: answer.letter,
+        points: answer.points,
+        segment: answer.segment
+      });
+
+      // Auto-advance after short delay
+      setTimeout(() => {
+        currentQuestion++;
+        if (currentQuestion < questions.length) {
+          renderQuestion();
+        } else {
+          // Quiz complete — show email gate
+          document.getElementById('progress-fill').style.width = '100%';
+          document.getElementById('progress-count').textContent = 'Complete!';
+          setTimeout(() => showScreen('screen-gate'), 300);
+        }
+      }, 400);
+    }
+
+    // =============================================
+    // GO HIGH LEVEL INTEGRATION
+    // =============================================
+    async function sendToGHL(contactData) {
+      if (!GHL_CONFIG.webhookUrl) {
+        console.warn('⚠️ GHL webhook URL not configured. Set GHL_CONFIG.webhookUrl in the script.');
+        console.log('📋 Data that would be sent:', contactData);
+        return { ok: false, reason: 'no_webhook_url' };
+      }
+
+      try {
+        const response = await fetch(GHL_CONFIG.webhookUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(contactData)
+        });
+        console.log('✅ Data sent to Go High Level:', contactData);
+        return { ok: response.ok };
+      } catch (err) {
+        console.error('❌ Failed to send to GHL:', err);
+        return { ok: false, reason: 'network_error' };
+      }
+    }
+
+    function buildGHLPayload(name, email) {
+      const level = getLevel(totalScore);
+      const levelNames = {
+        1: "Level 1 - Manual Operator",
+        2: "Level 2 - AI Tourist",
+        3: "Level 3 - AI Implementer",
+        4: "Level 4 - AI Orchestrator"
+      };
+
+      // Build individual question answers
+      const questionAnswers = {};
+      answers.forEach((a, i) => {
+        if (!questions[i].isSegmentation) {
+          questionAnswers[`q${a.questionId}_answer`] = a.answer;
+        }
+      });
+
+      return {
+        // Contact fields (GHL standard)
+        first_name: name || "",
+        email: email || "",
+        source: "AI Power Scale Quiz",
+        // Quiz results (GHL custom fields)
+        quiz_score: totalScore,
+        power_scale_level: levelNames[level],
+        power_scale_number: level,
+        business_role: userSegment || "not_provided",
+        // Tags for easy segmentation
+        tags: [`ps-level-${level}`, "quiz-completed", `role-${userSegment || "unknown"}`],
+        // Individual answers for deeper analysis
+        ...questionAnswers,
+        // Metadata
+        quiz_completed_at: new Date().toISOString(),
+        quiz_version: "1.0"
+      };
+    }
+
+    // =============================================
+    // EMAIL GATE
+    // =============================================
+    async function submitGate(e) {
+      e.preventDefault();
+      const name = document.getElementById('gate-name').value.trim();
+      const email = document.getElementById('gate-email').value.trim();
+
+      // Show loading state
+      const submitBtn = document.querySelector('.gate-submit');
+      const originalText = submitBtn.textContent;
+      submitBtn.textContent = 'Calculating your score...';
+      submitBtn.disabled = true;
+
+      // Store for personalization
+      window.quizLead = { name, email };
+
+      // Send to Go High Level
+      const payload = buildGHLPayload(name, email);
+      await sendToGHL(payload);
+
+      // Reset button and show results
+      submitBtn.textContent = originalText;
+      submitBtn.disabled = false;
+      showResults();
+    }
+
+    function skipGate() {
+      // Still send quiz data to GHL (without contact info) for analytics
+      const payload = buildGHLPayload("", "");
+      sendToGHL(payload);
+      showResults();
+    }
+
+    // =============================================
+    // RESULTS
+    // =============================================
+    function getLevel(score) {
+      if (score <= 25) return 1;
+      if (score <= 50) return 2;
+      if (score <= 75) return 3;
+      return 4;
+    }
+
+    function showResults() {
+      showScreen('screen-results');
+
+      const level = getLevel(totalScore);
+      const data = results[level];
+
+      // Header
+      const header = document.getElementById('results-header');
+      header.className = `results-header ${data.levelClass}`;
+
+      // Animate score number
+      const scoreEl = document.getElementById('score-number');
+      animateScore(scoreEl, totalScore);
+
+      // Badge & Title
+      document.getElementById('result-badge').textContent = data.badge;
+      document.getElementById('result-title').textContent = data.title;
+
+      // Score bar
+      const barFill = document.getElementById('score-bar-fill');
+      barFill.className = `score-bar-fill ${data.levelClass}`;
+      setTimeout(() => { barFill.style.width = `${totalScore}%`; }, 300);
+
+      // Highlight active bar label
+      for (let i = 1; i <= 4; i++) {
+        document.getElementById(`bl-${i}`).className = `bar-label${i === level ? ' active' : ''}`;
+      }
+
+      // Message
+      document.getElementById('results-message').innerHTML = data.message;
+
+      // Scale visual — highlight current level
+      for (let i = 1; i <= 4; i++) {
+        const row = document.getElementById(`sr-${i}`);
+        row.classList.toggle('current', i === level);
+      }
+
+      // Findings
+      const findingsList = document.getElementById('findings-list');
+      findingsList.innerHTML = data.findings.map(f => `
+        <div class="finding-item">
+          <div class="finding-icon">→</div>
+          <span class="finding-text">${f}</span>
+        </div>
+      `).join('');
+
+      // CTA
+      document.getElementById('cta-headline').textContent = data.ctaHeadline;
+      document.getElementById('cta-sub').textContent = data.ctaSub;
+      const ctaBtn = document.getElementById('cta-button');
+      ctaBtn.textContent = data.ctaText;
+      // Set CTA link from config (falls back to # if not configured)
+      ctaBtn.href = GHL_CONFIG.ctaLinks[level] || "#";
+      if (GHL_CONFIG.ctaLinks[level]) {
+        ctaBtn.target = "_blank";
+      }
+    }
+
+    function animateScore(el, target) {
+      let current = 0;
+      const step = Math.max(1, Math.floor(target / 40));
+      const interval = setInterval(() => {
+        current += step;
+        if (current >= target) {
+          current = target;
+          clearInterval(interval);
+        }
+        el.textContent = current;
+      }, 30);
+    }
+
+    // =============================================
+    // SHARING
+    // =============================================
+    function getShareText() {
+      const level = getLevel(totalScore);
+      const data = results[level];
+      return `I just took the AI Power Scale Quiz and scored ${totalScore}/100 — I'm a ${data.badge}! How AI-ready is YOUR business?`;
+    }
+
+    function shareLinkedIn() {
+      const text = encodeURIComponent(getShareText());
+      window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}&summary=${text}`, '_blank');
+    }
+
+    function shareFacebook() {
+      window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}&quote=${encodeURIComponent(getShareText())}`, '_blank');
+    }
+
+    function shareTwitter() {
+      const text = encodeURIComponent(getShareText());
+      window.open(`https://twitter.com/intent/tweet?text=${text}&url=${encodeURIComponent(window.location.href)}`, '_blank');
+    }
+
+    function copyLink() {
+      navigator.clipboard.writeText(window.location.href).then(() => {
+        const btn = document.getElementById('copy-btn');
+        btn.textContent = '✓';
+        setTimeout(() => { btn.textContent = '🔗'; }, 2000);
+      });
+    }
+
+    function retakeQuiz() {
+      startQuiz();
+    }
+  </script>
+
+</body>
+</html>
