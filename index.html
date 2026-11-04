@@ -1464,7 +1464,14 @@
       // Event links run inside totalsuccessai.com/assessment, which files the lead in Edge CRM.
       if (QUIZ_EVENT && window.parent !== window) {
         window.parent.postMessage(
-          { type: 'tsai-quiz-lead', name, email, score: totalScore, level: payload.power_scale_level },
+          {
+            type: 'tsai-quiz-lead', name, email, score: totalScore, level: payload.power_scale_level,
+            answers: answers.map((a) => {
+              const q = questions.find((x) => x.id === a.questionId);
+              const pick = q && q.answers.find((x) => x.letter === a.answer);
+              return { question: q ? q.text : '', answer: pick ? pick.text : a.answer, points: q && q.isSegmentation ? null : a.points };
+            }),
+          },
           'https://www.totalsuccessai.com'
         );
       }
