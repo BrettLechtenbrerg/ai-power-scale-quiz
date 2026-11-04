@@ -1399,6 +1399,9 @@
       }
     }
 
+    // Event code from the link (e.g. ?event=wbbu-2026-11-04), so event leads can be pulled out later.
+    const QUIZ_EVENT = (new URLSearchParams(location.search).get('event') || '').toLowerCase().replace(/[^a-z0-9-]/g, '').slice(0, 40);
+
     function buildGHLPayload(name, email) {
       const level = getLevel(totalScore);
       const levelNames = {
@@ -1427,7 +1430,8 @@
         power_scale_number: level,
         business_role: userSegment || "not_provided",
         // Tags for easy segmentation
-        tags: [`ps-level-${level}`, "quiz-completed", `role-${userSegment || "unknown"}`],
+        tags: [`ps-level-${level}`, "quiz-completed", `role-${userSegment || "unknown"}`, ...(QUIZ_EVENT ? [`event-${QUIZ_EVENT}`] : [])],
+        event: QUIZ_EVENT || "none",
         // Individual answers for deeper analysis
         ...questionAnswers,
         // Metadata
@@ -1456,6 +1460,14 @@
       // Send to Go High Level
       const payload = buildGHLPayload(name, email);
       await sendToGHL(payload);
+
+      // Event links run inside totalsuccessai.com/assessment, which files the lead in Edge CRM.
+      if (QUIZ_EVENT && window.parent !== window) {
+        window.parent.postMessage(
+          { type: 'tsai-quiz-lead', name, email, score: totalScore, level: payload.power_scale_level },
+          'https://www.totalsuccessai.com'
+        );
+      }
 
       // Reset button and show results
       submitBtn.textContent = originalText;
