@@ -1379,6 +1379,10 @@
     // GO HIGH LEVEL INTEGRATION
     // =============================================
     async function sendToGHL(contactData) {
+      // Brett's Edge CRM live-test addresses never go to GHL (TSAI-Site lib/lead.ts isTestEmail).
+      if (/^brett\+edgetest[a-z0-9-]*@brettlechtenberg\.com$/i.test(contactData.email || '')) {
+        return { ok: true, reason: 'test_address' };
+      }
       if (!GHL_CONFIG.webhookUrl) {
         console.warn('⚠️ GHL webhook URL not configured. Set GHL_CONFIG.webhookUrl in the script.');
         console.log('📋 Data that would be sent:', contactData);
@@ -1461,8 +1465,9 @@
       const payload = buildGHLPayload(name, email);
       await sendToGHL(payload);
 
-      // Event links run inside totalsuccessai.com/assessment, which files the lead in Edge CRM.
-      if (QUIZ_EVENT && window.parent !== window) {
+      // Inside totalsuccessai.com/assessment, the page files every lead in Edge CRM (Twenty);
+      // event links go under their event, the rest under "AI Power Scale quiz" (4 Nov 2026).
+      if (window.parent !== window) {
         window.parent.postMessage(
           {
             type: 'tsai-quiz-lead', name, email, score: totalScore, level: payload.power_scale_level,
